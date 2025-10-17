@@ -1,175 +1,153 @@
-import React from  "react";
-import ReactDOM from "react-dom"
+import React from "react";
+import { createRoot } from "react-dom/client";
 
-//React element is an object.
-var hOneReact = React.createElement("h1", {}, "HEADING CREATED using React");
-//hOneReact is a object
-
-var htmlRoot = document.getElementById("root");
-var rootReact = ReactDOM.createRoot(htmlRoot);
-
-//root.render(..) replaces the existing childs in the root with a html element created from hOneReact object
-rootReact.render(hOneReact);
-
-console.log(hOneReact);
-//JSX will make easy to create React elements.
-
-//JSX is not part of React. JSX is different from React.
-
-//JSX is a convention to merge HTML and javascript/React.
-
-var jsxHeading = <h1 id="jsxHeading">Heading from JSX!!</h1>
-console.log(jsxHeading);
-//jsxHeading is a React Element.
-
-//JSX looks like HTML but JSX is not HTML
-//JSX is not HTML inside javascript.
-//JSX is a HTML/XML like syntax.
-
-rootReact.render(jsxHeading)
-
-
-
-// JS Engine cannot understand JSX
-// Javascript wont come with JSX
-// JS Engine knows only ECMA SCRIPT 
-// browser dont undestand JSX , Browser knows only HTML.
-// try var jsxHeading = <h1 id="jsxHeading">Heading from JSX!!</h1> in browser console.
-// jsxHeading = <h1 id="jsxHeading">Heading from JSX!!</h1>  : is not pure jsvascript.
-
-//then how JSX is working in browser? Parcel manages to  Traspile JSX to javascript. 
-//Babel's job is to compile and convert JSX to Bowser/JS Engine/ React understandble code.
-// JSX will be traspilled before it reaches to JS Engine.
-
-//React.createElement(..) => React Element -- is a JS Object => render as HTML Element.
-//BABEL's job is //JSX => React.createElement(..) => React Element -- is a JS Object => render as HTML Element.
-
-// in future we use only JSX syntax only and dont use createElement(..)
-
-// refer and play on https://babeljs.io/ check how jsx converts to react elements.
-//babel can convert JSX to old browser compatible ES-script.
-
-// HTML : <h1 class="head">Heading from JSX!!</h1>
-// JSX  : <h1 className="head">Heading from JSX!!</h1>
-//JSX attributes must follow Camel case Ex: className, tabIndex
-
-//Single line JSX
-var jsxHeading = <h1 id="jsxHeading">Heading from JSX!!</h1>;
-//multiline JSX need t wrap in paranthesis()
-var jsxHeading = (<h1 
-    id="jsxHeading">Heading from JSX!!
-    </h1>);
-
-//try prettier extension in vscode
-
-//In React every thing is  a compinenet
-//--Functional Componenets(newer way) and -- Classbased componenets(old method).
-
-//React Functional Componenet is nothing but a JS function must return React Element (JSX).
-// React Component name mut be start with CAPITAL Letter.
-
-// Arrow function syntax
-const HeadingComponent = () => {
-    return <h1>ITs a React HeadingComponent</h1>;
-}
-
-//we can skip retun when there is only one line or return.
-const HeadingComponent1 = () => {
-     <h1>ITs a React Head Component1</h1>;
-}
-
-//we can remove the braces aswell when there is only one line or return.
-const HeadingComponent2 = () => <h1>ITs a React Head Component2</h1>;
-
-//we can add paranthesis when there are multiple lines or return.
-const HeadingComponent3 = () => (<h1>ITs a React Head Component3</h1>);
-
-//all the above are sysntaxes or JS not React
-
-// best practice is to use return.
-
-// the JS function can return a nested react elements
-const HeadingComponent4 = () => {
-    <div id="container1">
-        <h1>ITs a React Head Component4</h1>;
+// Header Component
+function Header() {
+  return (
+    <div style={{ backgroundColor: "#f84464", color: "white", padding: "15px", textAlign: "center" }}>
+      <h1>🎬 My Movie Booking App</h1>
     </div>
+  );
 }
 
-// React Element
-const heading = (
-    <h1 className="head" tabIndex="2">ITs a React Element</h1>
-);
-
-//To convert React Element to React Componenet
-//change the name of the variable to CAPITAL Letter and make it as a function.
-
-//Rendering React Element
-rootReact.render(heading);
-
-//Rendering React Componenet (must wrap it as a tag) Babel understands it.
-rootReact.render(<HeadingComponent4 />);
-
-//Nested React Componenets 
-
-const Title1 = () => {
-    <div id="container1">
-        <h1>ITs a React Title1 </h1>;
+// Movie Card Component
+function MovieCard({ title, image, likes }) {
+  return (
+    <div style={{
+      width: "180px",
+      margin: "15px",
+      border: "1px solid #ddd",
+      borderRadius: "10px",
+      overflow: "hidden",
+      boxShadow: "0 2px 5px rgba(0,0,0,0.1)"
+    }}>
+      <img src={image} alt={title} style={{ width: "100%", height: "250px", objectFit: "cover" }} />
+      <div style={{ padding: "10px", textAlign: "center" }}>
+        <h3>{title}</h3>
+        <p style={{ color: "green" }}>👍 {likes} Likes</p>
+        <button style={{
+          padding: "8px 15px",
+          backgroundColor: "#f84464",
+          border: "none",
+          color: "white",
+          borderRadius: "5px",
+          cursor: "pointer"
+        }}>
+          Book Now
+        </button>
+      </div>
     </div>
+  );
 }
 
-const HeadingComponent5 = () => {
-    // ITs an error to add <Title1> here because function must return only one React Element (may be nested)
-    //<Title1 />
-    <div id="container1">
-        <Title1 />
-        <Title1></Title1>
-        <Title1/>
-        <h1>ITs a React Head Component5</h1>;
+// Body Component
+function Body() {
+  const movies = [
+    {
+      title: "Mithra Mandali",
+      image: "https://m.media-amazon.com/images/M/MV5BMmI0MmU4ZTktMWM3OS00OGYzLTkzOTktZjJiOTc1NzU4YjI5XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg",
+    },
+    {
+      title: "Dude",
+      image: "https://m.media-amazon.com/images/M/MV5BZWFiMzEzZTQtZjFiZC00YjhjLTk3Y2QtYzA2MjE4MmRiNzdmXkEyXkFqcGc@._V1_.jpg",
+      likes: "123K",
+    },
+    {
+      title: "Telusu Kadha",
+      image: "https://preview.redd.it/telusu-kada-new-poster-v0-1xp27m1xzloe1.jpeg?auto=webp&s=2079d42111dbe5d182fcdea31dd294ae74d527e1",
+      likes: "102K",
+    },
+    {
+      title: "Kantara",
+      image: "https://upload.wikimedia.org/wikipedia/en/thumb/6/69/Kantara-_Chapter_1_poster.jpg/250px-Kantara-_Chapter_1_poster.jpg",
+      likes: "408K",
+    },
+    {
+      title: "K-Ramp",
+      image:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQphpyQ9FwmX1Tp_2OZwagVc75M6OlCFXGVWQ&s",
+      likes: "31K",
+    },
+  ];
+
+  return (
+    <div style={{ textAlign: "center", padding: "20px" }}>
+      <h2>🎥 Recommended Movies</h2>
+      <div style={{
+        display: "flex",
+        justifyContent: "center",
+        flexWrap: "wrap"
+      }}>
+        {movies.map((movie, index) => (
+          <div
+            key={index}
+            style={{
+              width: "200px",
+              margin: "15px",
+              border: "1px solid #ddd",
+              borderRadius: "10px",
+              overflow: "hidden",
+              boxShadow: "0 2px 5px rgba(0,0,0,0.1)",
+              backgroundColor: "white"
+            }}
+          >
+            <img
+              src={movie.image}
+              alt={movie.title}
+              style={{
+                width: "100%",
+                height: "280px",
+                objectFit: "cover"
+              }}
+            />
+            <div style={{ padding: "10px", textAlign: "center" }}>
+              <h3>{movie.title}</h3>
+              <p style={{ color: "green" }}>👍 {movie.likes} Likes</p>
+              <button
+                style={{
+                  padding: "8px 15px",
+                  backgroundColor: "#f84464",
+                  border: "none",
+                  color: "white",
+                  borderRadius: "5px",
+                  cursor: "pointer"
+                }}
+              >
+                Book Now
+              </button>
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
+  );
 }
 
-//this is called Componenet Composition (just a terminology)
-
-// Can I use normal function in place of Arrow function to create React Componenet?
-// YES!!
-
-const Title2 = function(){
-    return (
-        <div id="container1">
-            <h1>ITs a React Title2 </h1>;
-        </div>
-    );
-}
-
-//but arrow function are industry wide standard.
-
-// React Element inside a React Componenet
-// React Element
-
-const heading1 = (
-    <h1 className="head" tabIndex="2">ITs a React Heading</h1>
-);
-
-const span = (
-    <span>{heading1}</span>
-);
-
-const num1 = 100;
-const HeadingComponent6 = () => {
-    //we need to use {} to include any Javascript code inside a JSX
-    <div id="container1">
-        <Title1 />
-        {num1};
-        {num1 + 200};
-        <h2>{num1 + 300}</h2>;
-        {console.log("I am satya.n.")};
-        {heading1};
-        {Title1()};
-        <h1>ITs a React Head Component6</h1>;
+// Footer Component
+function Footer() {
+  return (
+    <div style={{
+      backgroundColor: "#222",
+      color: "white",
+      textAlign: "center",
+      padding: "10px",
+      marginTop: "20px"
+    }}>
+      <p>© 2025 My Movie Booking App. All rights reserved.</p>
     </div>
+  );
 }
 
-//is it possible to create infinite loop in HTML?
-// why i am using const to create react element or react componenet?
+// Main App Component
+function App() {
+  return (
+    <>
+      <Header />
+      <Body />
+      <Footer />
+    </>
+  );
+}
 
-// Componenet inside a Element
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+root.render(<App />);
