@@ -7,13 +7,22 @@ const Header = () => {
     <div className="header">
       <div className="brand">
         <div className="title-row">
+          
+          {/* LEFT SIDE — IMAGE */}
           <AppIcon />
-          <TitleComponenet />
+
+          {/* RIGHT SIDE — TITLE + TAGLINE */}
+          <div className="text-block">
+            <TitleComponenet />
+            <TitleTagLine />
+          </div>
+
         </div>
-        <TitleTagLine />
       </div>
     </div>
   );
 };
 
 export default Header;
+
+
